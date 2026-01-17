@@ -1,6 +1,11 @@
 const { connect } = require('puppeteer-real-browser');
 const fs = require('fs')
 
+function getRandomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 async function start(){
     const { browser, page } = await connect({
@@ -13,7 +18,7 @@ async function start(){
         ignoreAllFlags: false,
     });
 
-    const uname = "Littlebitch2003";
+    const uname = "SnoozeBooy";
     const pword = "538538538";
 
     const url = "https://x.com/i/flow/login";
