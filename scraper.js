@@ -27,6 +27,8 @@ async function start(){
 
     // Force focus before typing
     
+    //Randomized movement for humanlike behavoir
+    draw_a_curve(page)
 
     // Small delay to avoid layout shift stealing focus
     await new Promise(r => setTimeout(r, 3000));
@@ -92,6 +94,38 @@ async function start(){
     // // await page.type('input[placeholder="Password"]', pword);
 
 
+}
+
+
+async function draw_a_curve(page, points=60){
+    start_x = Math.random()*1000
+    start_y = Math.random()*900
+
+    points += Math.ceil((Math.random()-0.2)*30)
+    page.mouse.move(
+        start_x,
+        start_y,
+        {steps: Math.ceil(Math.random()*30)}
+    )
+    
+    x = start_x
+    y = start_y
+    for(i=0; i<points; i++){
+        x = Math.sin(i/(points/2)*Math.PI);
+        y = Math.cos(i/(points/2)*Math.PI);
+        page.mouse.move(
+            start_x+x,
+            start_y+y,
+            {steps: Math.ceil(Math.random()*30)}
+            
+        )
+        //console.log("("+x+", "+y+")")
+        await sleep(Math.random()*6)
+    }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 start();
