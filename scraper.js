@@ -18,23 +18,34 @@ async function start(){
 
     const url = "https://x.com/i/flow/login";
     await page.goto(url);
-
+    // await page.waitForNetworkIdle({ idleTime: 1500 });
 
     // Force focus before typing
     
 
     // Small delay to avoid layout shift stealing focus
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 3000));
     await page.focus('input[name="text"]');
-    await page.type('input[name="text"]', uname, { delay: 50 });
+    for (const char of uname) {
+        const delay = 500 + Math.random() * 400; // 80–200ms
+        await page.type('input[name="text"]', char, { delay });
+    }
+
+    await new Promise(r => setTimeout(r, 1000));
+    await page.keyboard.press('Enter');
+    
 
 
-    // page.click('div[role="button"]')
-    // // Press the Next button
-    // // await page.evaluate(() =>
-    // //     page.click('div[role="button"]')
-    // //     // document.querySelectorAll('div[role="button"]')[2].click()
-    // // );
+    await page.evaluate(() => {
+        const btn = document.querySelector('div[role="button"]');
+        if (btn) btn.click();
+        else console.log("Didn't find")
+    });
+
+    // Press the Next button
+    // await page.evaluate(() =>
+    //     page.click('div[role="button"]')
+    // );
     // await page.waitForNetworkIdle({ idleTime: 1500 });
     // ///////////////////////////////////////////////////////////////////////////////////
     // // Sometimes twitter suspect suspicious activties, so it ask for your handle/phone Number
