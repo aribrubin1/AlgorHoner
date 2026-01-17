@@ -18,17 +18,16 @@ async function start(){
 
     const url = "https://x.com/i/flow/login";
     await page.goto(url);
-
-
-    // Force focus before typing
-    
+    await page.waitForNetworkIdle({ idleTime: 1500 });
 
     // Small delay to avoid layout shift stealing focus
-    await new Promise(r => setTimeout(r, 1000));
-    await page.focus('input[name="text"]');
-    await page.type('input[name="text"]', uname, { delay: 50 });
+    await page.waitForSelector("[autocomplete=username]");
+    await page.focus("input[autocomplete=username]");
+    await page.type("input[autocomplete=username]", user_email, { delay: 50 });
 
 
+    // const next_selector = "::-p-xpath(//button[normalize-space(.)='Next'])"
+    // await page.click(next_selector)
     // page.click('div[role="button"]')
     // // Press the Next button
     // // await page.evaluate(() =>
