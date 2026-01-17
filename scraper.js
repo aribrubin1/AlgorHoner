@@ -1,6 +1,11 @@
 const { connect } = require('puppeteer-real-browser');
 const fs = require('fs')
 
+function getRandomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 async function start(){
     const { browser, page } = await connect({
@@ -13,7 +18,7 @@ async function start(){
         ignoreAllFlags: false,
     });
 
-    const uname = "Littlebitch2003";
+    const uname = "SnoozeBooy";
     const pword = "538538538";
 
     const url = "https://x.com/i/flow/login";
@@ -28,6 +33,11 @@ async function start(){
     await page.focus('input[name="text"]');
     for (const char of uname) {
         const delay = 500 + Math.random() * 400; // 80–200ms
+        const error = getRandomInteger(0,10);
+        if(error % 3 == 0){
+            await page.type('input[name="text"]', 'a', { delay });
+            await page.keyboard.press('Backspace', { delay });
+        }
         await page.type('input[name="text"]', char, { delay });
     }
 
