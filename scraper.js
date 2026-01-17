@@ -18,15 +18,15 @@ async function start(){
 
     const url = "https://x.com/i/flow/login";
     await page.goto(url);
-    await page.waitForNetworkIdle({ idleTime: 1500 });
 
 
     // Force focus before typing
     
 
     // Small delay to avoid layout shift stealing focus
-    await page.waitForSelector("[autocomplete=username]");
-    await page.type("input[autocomplete=username]", user_email, { delay: 50 });
+    await new Promise(r => setTimeout(r, 1000));
+    await page.focus('input[name="text"]');
+    await page.type('input[name="text"]', uname, { delay: 50 });
 
 
     // page.click('div[role="button"]')
